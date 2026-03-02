@@ -28,15 +28,15 @@ const EditorPanel: React.FC<Props> = ({ slide, onUpdate, onAiGenerate, isAiLoadi
   const [expandedSection, setExpandedSection] = useState<string | null>('main');
 
   const Section: React.FC<{ id: string; title: string; children: React.ReactNode }> = ({ id, title, children }) => (
-    <div className="border-b border-slate-100">
-      <button 
+    <div className="form-section">
+      <button
         onClick={() => setExpandedSection(expandedSection === id ? null : id)}
-        className="w-full px-6 py-4 flex items-center justify-between hover:bg-slate-50 transition-colors"
+        className="form-section-header"
       >
-        <span className="font-bold text-slate-700">{title}</span>
+        <span className="form-section-title">{title}</span>
         {expandedSection === id ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
       </button>
-      {expandedSection === id && <div className="px-6 pb-6 animate-in fade-in slide-in-from-top-1 duration-200">{children}</div>}
+      {expandedSection === id && <div className="form-section-content">{children}</div>}
     </div>
   );
 
@@ -183,6 +183,32 @@ const EditorPanel: React.FC<Props> = ({ slide, onUpdate, onAiGenerate, isAiLoadi
                 <p className="logo-hint">يدعم JPG, PNG (يفضل خلفية شفافة)</p>
               </div>
             </div>
+
+            {/* Preset Logos Section */}
+            <div className="logo-preset-section">
+              <label className="logo-label">أو اختر شعاراً جاهزاً</label>
+              <div className="logo-preset-grid">
+                {[
+                  { id: 1, path: '/logos/logo-1.png', name: 'شعار 1' },
+                  { id: 2, path: '/logos/logo-2.png', name: 'شعار 2' },
+                  { id: 3, path: '/logos/logo-3.png', name: 'شعار 3' },
+                  { id: 4, path: '/logos/logo-4.png', name: 'شعار 4' },
+                ].map(logo => {
+                  const isActive = slide.logoUrl === logo.path;
+                  return (
+                    <button
+                      key={logo.id}
+                      onClick={() => onUpdate({ logoUrl: logo.path })}
+                      className={`logo-preset-item ${isActive ? 'active' : ''}`}
+                      title={logo.name}
+                    >
+                      <img src={logo.path} alt={logo.name} className="logo-preset-img" />
+                      {isActive && <div className="logo-preset-check">✓</div>}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           <div className="theme-divider"></div>
@@ -297,20 +323,20 @@ const EditorPanel: React.FC<Props> = ({ slide, onUpdate, onAiGenerate, isAiLoadi
       <div className="flex-1 overflow-y-auto">
         <Section id="main" title="العناوين الأساسية">
           <div className="space-y-4">
-            <div>
-              <label className="block text-xs font-bold text-slate-500 mb-1">العنوان الرئيسي</label>
-              <input 
+            <div className="form-field">
+              <label className="form-label">العنوان الرئيسي</label>
+              <input
                 value={slide.title}
                 onChange={(e) => onUpdate({ title: e.target.value })}
-                className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-red-500 outline-none"
+                className="form-input"
               />
             </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-500 mb-1">العنوان الفرعي</label>
-              <textarea 
+            <div className="form-field">
+              <label className="form-label">العنوان الفرعي</label>
+              <textarea
                 value={slide.subtitle}
                 onChange={(e) => onUpdate({ subtitle: e.target.value })}
-                className="w-full h-20 px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-red-500 outline-none"
+                className="form-textarea"
               />
             </div>
           </div>
@@ -318,47 +344,47 @@ const EditorPanel: React.FC<Props> = ({ slide, onUpdate, onAiGenerate, isAiLoadi
 
         <Section id="data" title="البيانات والأرقام">
           <div className="space-y-4">
-            <div>
-              <label className="block text-xs font-bold text-slate-500 mb-1">النسبة المئوية</label>
-              <input 
+            <div className="form-field">
+              <label className="form-label">النسبة المئوية</label>
+              <input
                 value={slide.percentage}
                 onChange={(e) => onUpdate({ percentage: e.target.value })}
-                className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-red-500 outline-none"
+                className="form-input"
               />
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-xs font-bold text-slate-500 mb-1">القيمة الحالية</label>
-                <input 
+            <div className="form-grid-2">
+              <div className="form-field">
+                <label className="form-label">القيمة الحالية</label>
+                <input
                   value={slide.val1}
                   onChange={(e) => onUpdate({ val1: e.target.value })}
-                  className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm"
+                  className="form-input"
                 />
               </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-500 mb-1">الوصف الزمني</label>
-                <input 
+              <div className="form-field">
+                <label className="form-label">الوصف الزمني</label>
+                <input
                   value={slide.label1}
                   onChange={(e) => onUpdate({ label1: e.target.value })}
-                  className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm"
+                  className="form-input"
                 />
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-xs font-bold text-slate-500 mb-1">القيمة المقارنة</label>
-                <input 
+            <div className="form-grid-2">
+              <div className="form-field">
+                <label className="form-label">القيمة المقارنة</label>
+                <input
                   value={slide.val2}
                   onChange={(e) => onUpdate({ val2: e.target.value })}
-                  className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm opacity-60"
+                  className="form-input form-input-secondary"
                 />
               </div>
-              <div>
-                <label className="block text-xs font-bold text-slate-500 mb-1">الوصف المقارن</label>
-                <input 
+              <div className="form-field">
+                <label className="form-label">الوصف المقارن</label>
+                <input
                   value={slide.label2}
                   onChange={(e) => onUpdate({ label2: e.target.value })}
-                  className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm opacity-60"
+                  className="form-input form-input-secondary"
                 />
               </div>
             </div>
@@ -366,19 +392,19 @@ const EditorPanel: React.FC<Props> = ({ slide, onUpdate, onAiGenerate, isAiLoadi
         </Section>
 
         <Section id="details" title="التفاصيل والوصف">
-          <div>
-            <label className="block text-xs font-bold text-slate-500 mb-1">الوصف التفصيلي</label>
-            <textarea 
+          <div className="form-field">
+            <label className="form-label">الوصف التفصيلي</label>
+            <textarea
               value={slide.description}
               onChange={(e) => onUpdate({ description: e.target.value })}
-              className="w-full h-32 px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-red-500 outline-none"
+              className="form-textarea"
             />
           </div>
         </Section>
       </div>
 
       {/* Footer Branding */}
-      <div className="p-4 border-t border-slate-100 bg-slate-50 flex items-center justify-center gap-2 text-xs font-bold text-slate-400">
+      <div className="auto-save-footer">
         <Save size={14} />
         يتم الحفظ تلقائياً في المتصفح
       </div>
