@@ -4,7 +4,7 @@
 
 /* المتغيرات العامة */
 :root {
-  --font-arabic: 'IBM Plex Sans Arabic', sans-serif;
+  --font-arabic: "IBM Plex Sans Arabic", sans-serif;
   --bg-slate-50: #f8fafc;
   --bg-slate-100: #f1f5f9;
   --bg-white: #ffffff;
@@ -365,7 +365,9 @@ body {
   aspect-ratio: 4/5;
   width: 100%;
   max-width: 500px;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
 .slide-bg-pattern {
@@ -582,22 +584,23 @@ body {
   font-weight: 700;
 }
 
-/* التذييل */
 .slide-footer {
   position: relative;
   margin-top: auto;
-  height: 20rem;
+  flex: 1;
+  min-height: 0;
   width: 100%;
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: 0.5rem;
-  overflow: visible;
+  padding-bottom: 4rem; /* Leave space for bottom branding text */
+  padding-top: 1rem;
+  overflow: hidden;
 }
 
 .slide-footer-glow {
   position: absolute;
-  bottom: 1.5rem;
+  bottom: 50%;
   width: 10rem;
   height: 10rem;
   border-radius: 9999px;
@@ -607,7 +610,7 @@ body {
 
 .slide-footer-circle {
   position: absolute;
-  bottom: 2rem;
+  bottom: 0;
   width: 7rem;
   height: 7rem;
   border-radius: 9999px;
@@ -616,25 +619,12 @@ body {
 
 .slide-image-container {
   position: relative;
-  width: 92%;
+  width: 100%;
+  height: 100%;
   z-index: 20;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  margin-bottom: -2rem;
-}
-
-.slide-image-frame {
-  position: relative;
-  overflow: visible !important;
-  border-radius: 1.5rem;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  border: 4px solid;
-  background: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  padding: 0;
 }
 
 .slide-footer-img {
@@ -914,7 +904,9 @@ body {
 
 .css-editor:focus {
   border-color: var(--teal-500);
-  box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 0 0 1px var(--teal-500);
+  box-shadow:
+    inset 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 0 0 1px var(--teal-500);
 }
 
 .css-reset-button {

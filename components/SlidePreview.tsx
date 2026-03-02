@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { SlideData } from '../types';
+import React from "react";
+import { SlideData } from "../types";
 
 interface Props {
   slide: SlideData;
@@ -8,7 +7,8 @@ interface Props {
 
 const SlidePreview: React.FC<Props> = ({ slide }) => {
   // Helpers to determine color brightness for contrast adjustments (simple version)
-  const isDarkBg = slide.backgroundColor === '#1e1e1e' || slide.backgroundColor === '#0f172a';
+  const isDarkBg =
+    slide.backgroundColor === "#1e1e1e" || slide.backgroundColor === "#0f172a";
 
   return (
     <div
@@ -22,17 +22,16 @@ const SlidePreview: React.FC<Props> = ({ slide }) => {
       {/* Decorative Background Elements */}
       <div
         className="slide-bg-pattern"
-        style={{ opacity: isDarkBg ? 0.05 : 0.1, filter: isDarkBg ? 'invert(1)' : 'none' }}
+        style={{
+          opacity: isDarkBg ? 0.05 : 0.1,
+          filter: isDarkBg ? "invert(1)" : "none",
+        }}
       ></div>
 
       {/* Logo Rendering */}
       {slide.logoUrl && (
         <div className="slide-logo-container">
-          <img
-            src={slide.logoUrl}
-            alt="Logo"
-            className="slide-logo-img"
-          />
+          <img src={slide.logoUrl} alt="Logo" className="slide-logo-img" />
         </div>
       )}
 
@@ -49,11 +48,22 @@ const SlidePreview: React.FC<Props> = ({ slide }) => {
             className="slide-subtitle-bg"
             style={{ backgroundColor: slide.themeColor, opacity: 0.1 }}
           ></div>
-          <p className="slide-subtitle" style={{ color: slide.textColor, opacity: 0.9 }}>
+          <p
+            className="slide-subtitle"
+            style={{ color: slide.textColor, opacity: 0.9 }}
+          >
             {slide.subtitle.split(/(\d+)/).map((part, i) =>
               /\d+/.test(part) ? (
-                <span key={i} className="slide-highlight" style={{ color: slide.themeColor }}>{part}</span>
-              ) : part
+                <span
+                  key={i}
+                  className="slide-highlight"
+                  style={{ color: slide.themeColor }}
+                >
+                  {part}
+                </span>
+              ) : (
+                part
+              ),
             )}
           </p>
         </div>
@@ -69,9 +79,15 @@ const SlidePreview: React.FC<Props> = ({ slide }) => {
             </span>
             <span
               className="slide-percentage-main"
-              style={{ color: slide.themeColor, WebkitTextStroke: `1px ${slide.themeColor}33` }}
+              style={{
+                color: slide.themeColor,
+                WebkitTextStroke: `1px ${slide.themeColor}33`,
+              }}
             >
-              بنسبة <span className="slide-percentage-number">{slide.percentage}</span>
+              بنسبة{" "}
+              <span className="slide-percentage-number">
+                {slide.percentage}
+              </span>
             </span>
           </div>
         </div>
@@ -79,10 +95,16 @@ const SlidePreview: React.FC<Props> = ({ slide }) => {
         {/* Comparative Values Section */}
         <div className="slide-stats-grid">
           <div className="slide-stat-left">
-            <div className="slide-stat-value" style={{ color: slide.textColor }}>
+            <div
+              className="slide-stat-value"
+              style={{ color: slide.textColor }}
+            >
               {slide.val1}
             </div>
-            <div className="slide-stat-label" style={{ color: slide.textColor, opacity: 0.6 }}>
+            <div
+              className="slide-stat-label"
+              style={{ color: slide.textColor, opacity: 0.6 }}
+            >
               {slide.label1}
             </div>
           </div>
@@ -97,23 +119,45 @@ const SlidePreview: React.FC<Props> = ({ slide }) => {
           </div>
 
           <div className="slide-stat-right">
-            <div className="slide-stat-value" style={{ color: slide.textColor }}>
+            <div
+              className="slide-stat-value"
+              style={{ color: slide.textColor }}
+            >
               {slide.val2}
             </div>
-            <div className="slide-stat-label" style={{ color: slide.textColor, opacity: 0.6 }}>
+            <div
+              className="slide-stat-label"
+              style={{ color: slide.textColor, opacity: 0.6 }}
+            >
               {slide.label2}
             </div>
           </div>
         </div>
 
         {/* Detailed Description */}
-        <div className="slide-description-wrapper" style={{ borderTop: `1px solid ${slide.textColor}22` }}>
-          <p className="slide-description" style={{ color: slide.textColor, opacity: 0.8 }}>
-            {slide.description.split(/(\d+%?|\d+ مليون دولار)/).map((part, i) =>
-              /(\d+%?|\d+ مليون دولار)/.test(part) ? (
-                <span key={i} className="slide-desc-highlight" style={{ color: slide.themeColor }}>{part}</span>
-              ) : part
-            )}
+        <div
+          className="slide-description-wrapper"
+          style={{ borderTop: `1px solid ${slide.textColor}22` }}
+        >
+          <p
+            className="slide-description"
+            style={{ color: slide.textColor, opacity: 0.8 }}
+          >
+            {slide.description
+              .split(/(\d+%?|\d+ مليون دولار)/)
+              .map((part, i) =>
+                /(\d+%?|\d+ مليون دولار)/.test(part) ? (
+                  <span
+                    key={i}
+                    className="slide-desc-highlight"
+                    style={{ color: slide.themeColor }}
+                  >
+                    {part}
+                  </span>
+                ) : (
+                  part
+                ),
+              )}
           </p>
         </div>
       </div>
@@ -132,18 +176,50 @@ const SlidePreview: React.FC<Props> = ({ slide }) => {
 
         {/* Illustrative Image */}
         <div className="slide-image-container">
-          <div
-            className="slide-image-frame"
-            style={{ borderColor: slide.backgroundColor }}
-          >
-            <img
-              src={slide.footerImage}
-              alt="Footer Visual"
-              crossOrigin="anonymous"
-              className="slide-footer-img"
-            />
-          </div>
+          <img
+            src={slide.footerImage}
+            alt="Footer Visual"
+            crossOrigin="anonymous"
+            className="slide-footer-img"
+          />
         </div>
+      </div>
+
+      {/* Branding Footer */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "24px",
+          left: "32px",
+          right: "32px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          zIndex: 50,
+          opacity: 0.8,
+          fontSize: "18px",
+          fontWeight: "bold",
+        }}
+      >
+        <span style={{ color: slide.textColor }}>منصة المستثمر</span>
+        <span
+          style={{
+            color: slide.textColor,
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+          }}
+        >
+          al-investor
+          <div
+            style={{
+              width: "8px",
+              height: "8px",
+              borderRadius: "50%",
+              backgroundColor: slide.themeColor,
+            }}
+          ></div>
+        </span>
       </div>
     </div>
   );
